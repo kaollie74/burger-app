@@ -35,8 +35,9 @@ class BurgerIngredient extends Component {
       default:
         ingredient = null;
 
-        return ingredient
     } // end Switch
+    return ingredient
+
   } // end render()
 
 } // class BurgerIngredient
