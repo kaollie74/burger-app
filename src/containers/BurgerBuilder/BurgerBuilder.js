@@ -28,7 +28,7 @@ class BurgerBuilder extends Component {
   addIngredientHandler = (type) => {
     console.log('type: ', type);
     // grab the current ingredient type that is in state
-    const oldCount = this.state.ingredients[type]
+    const oldCount = this.state.ingredients[type]  
     // updated that incrementing by 1
     const updatedCount = oldCount + 1;
     // grab state since its best to set state this way.
@@ -50,6 +50,19 @@ class BurgerBuilder extends Component {
   } // end addIngredientHandler 
 
   removeIngredientHandler = (type) => {
+    const currentIng = this.state.ingredients[type]; 
+    const updateIng = currentIng - 1; 
+    const updatedStateIngredients = { ...this.state.ingredients};
+
+    updatedStateIngredients[type] = updateIng; 
+    const priceSubtraction = INGREDIENT_PRICES[type];
+    const currentTotalPrice = this.state.totalPrice; 
+    const newTotalPrice = currentTotalPrice - priceSubtraction; 
+
+    this.setState({
+      totalPrice: newTotalPrice,
+      ingredients: updatedStateIngredients
+    })
 
   }
 
@@ -60,6 +73,7 @@ class BurgerBuilder extends Component {
         <div>
           <BuildControls
             ingredientAdded={this.addIngredientHandler}
+            removeIngredient ={this.removeIngredientHandler}
           />
         </div>
       </Aux>
