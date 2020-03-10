@@ -28,7 +28,7 @@ class BurgerBuilder extends Component {
   addIngredientHandler = (type) => {
     console.log('type: ', type);
     // grab the current ingredient type that is in state
-    const oldCount = this.state.ingredients[type]  
+    const oldCount = this.state.ingredients[type]
     // updated that incrementing by 1
     const updatedCount = oldCount + 1;
     // grab state since its best to set state this way.
@@ -50,30 +50,45 @@ class BurgerBuilder extends Component {
   } // end addIngredientHandler 
 
   removeIngredientHandler = (type) => {
-    const currentIng = this.state.ingredients[type]; 
-    const updateIng = currentIng - 1; 
-    const updatedStateIngredients = { ...this.state.ingredients};
+    const currentIng = this.state.ingredients[type];
 
-    updatedStateIngredients[type] = updateIng; 
+    // check the value of currentIng. If less than or equal to 0 return 
+    // this will exit the function and the rest of the code will not be executed. 
+    if (currentIng <= 0) {
+      return;
+    } // end IF
+    const updateIng = currentIng - 1;
+    const updatedStateIngredients = { ...this.state.ingredients };
+
+    updatedStateIngredients[type] = updateIng;
     const priceSubtraction = INGREDIENT_PRICES[type];
-    const currentTotalPrice = this.state.totalPrice; 
-    const newTotalPrice = currentTotalPrice - priceSubtraction; 
+    const currentTotalPrice = this.state.totalPrice;
+    const newTotalPrice = currentTotalPrice - priceSubtraction;
 
     this.setState({
       totalPrice: newTotalPrice,
       ingredients: updatedStateIngredients
     })
 
+
   }
 
   render() {
+    const disabledInfo = { ...this.state.ingredients}
+
+    for(let key in disabledInfo) {
+      // if the value of each key is less than or equal to 0
+      // return true. 
+      disabledInfo[key] = disabledInfo[key] <= 0;
+    }
     return (
       <Aux>
         <div><Burger ingredients={this.state.ingredients} /></div>
         <div>
           <BuildControls
             ingredientAdded={this.addIngredientHandler}
-            removeIngredient ={this.removeIngredientHandler}
+            removeIngredient={this.removeIngredientHandler}
+            disabledInfo = {disabledInfo}
           />
         </div>
       </Aux>
