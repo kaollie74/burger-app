@@ -3,6 +3,7 @@ import React from 'react';
 import classes from "./BuildControls.css";
 import BuildControl from "./BuildControl/BuildControl";
 
+// variable the holds an Array of objects
 const controls = [
   { label: 'Salad', type: 'salad' },
   { label: 'Bacon', type: 'bacon' },
@@ -18,7 +19,8 @@ const buildControls = (props) => {
           <BuildControl
             key={item.label}
             label={item.label}
-            added={() => props.ingredientAdded(item.type)}
+            added={() => props.ingredientAdded(item.type)} // passed in prop comes from BurgerBuilder.js
+            remove= {()=> props.removeIngredient(item.type)}
 
           />
         )
