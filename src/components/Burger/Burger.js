@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from "./Burger.css";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient"
-import { array } from 'prop-types';
 
 const burger = (props) => {
 
@@ -15,7 +14,7 @@ const burger = (props) => {
     }).reduce((prevArray, currentItem) => {
       return prevArray.concat(currentItem)
     }, [])
-  console.log(transformedIngredients);
+ 
 
 if(transformedIngredients.length === 0){
   transformedIngredients = <p>Please start adding ingredients</p>

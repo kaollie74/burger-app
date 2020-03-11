@@ -26,7 +26,7 @@ class BurgerBuilder extends Component {
   // type will either by 'salad', 'cheese', 'bacon', or 'meat.'
   // this is how we will identify the changes since it will act like an index. 
   addIngredientHandler = (type) => {
-    console.log('type: ', type);
+    
     // grab the current ingredient type that is in state
     const oldCount = this.state.ingredients[type]
     // updated that incrementing by 1
@@ -39,7 +39,7 @@ class BurgerBuilder extends Component {
     // the specific type.
     updatedIngredients[type] = updatedCount;
     const priceAddition = INGREDIENT_PRICES[type]
-    console.log(priceAddition);
+    
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice + priceAddition;
 
@@ -89,6 +89,7 @@ class BurgerBuilder extends Component {
             ingredientAdded={this.addIngredientHandler}
             removeIngredient={this.removeIngredientHandler}
             disabledInfo = {disabledInfo}
+            price = {this.state.totalPrice}
           />
         </div>
       </Aux>
