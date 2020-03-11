@@ -20,13 +20,29 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4
+    totalPrice: 4,
+    purchasable: false
   }
-  // ADD INGREDIENT HANDLER >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> UPDATE PURCHASE STATE 
+  updatePurchaseState = (ingredients) => {
+
+    const sum = Object.keys(ingredients)// this will create an array of strings. 
+      .map(item => {
+        return ingredients[item] // this will be the amount of each key value.
+      }).reduce((total, eachEl) => {
+        return total + eachEl
+      }, 0)
+
+    this.setState({
+      purchasable: sum > 0 // set to either true or false
+    })
+  } // END UPDATE PURCHASE STATE
+
+  //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ADD INGREDIENT HANDLER
   // type will either by 'salad', 'cheese', 'bacon', or 'meat.'
   // this is how we will identify the changes since it will act like an index. 
   addIngredientHandler = (type) => {
-    
+
     // grab the current ingredient type that is in state
     const oldCount = this.state.ingredients[type]
     // updated that incrementing by 1
@@ -39,7 +55,7 @@ class BurgerBuilder extends Component {
     // the specific type.
     updatedIngredients[type] = updatedCount;
     const priceAddition = INGREDIENT_PRICES[type]
-    
+
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice + priceAddition;
 
@@ -47,8 +63,12 @@ class BurgerBuilder extends Component {
       totalPrice: newPrice,
       ingredients: updatedIngredients
     })
+
+    this.updatePurchaseState(updatedIngredients) // pass in argument since setState may not be done when this method runs
+
   } // end addIngredientHandler 
 
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REMOVE INGREDIENT HANDLER
   removeIngredientHandler = (type) => {
     const currentIng = this.state.ingredients[type];
 
@@ -70,13 +90,14 @@ class BurgerBuilder extends Component {
       ingredients: updatedStateIngredients
     })
 
+    this.updatePurchaseState(updatedStateIngredients) // pass in argument since setState may not be done when this function runs
 
-  }
+  } // end removeIngredientHandler
 
   render() {
-    const disabledInfo = { ...this.state.ingredients}
+    const disabledInfo = { ...this.state.ingredients }
 
-    for(let key in disabledInfo) {
+    for (let key in disabledInfo) {
       // if the value of each key is less than or equal to 0
       // return true. 
       disabledInfo[key] = disabledInfo[key] <= 0;
@@ -88,8 +109,9 @@ class BurgerBuilder extends Component {
           <BuildControls
             ingredientAdded={this.addIngredientHandler}
             removeIngredient={this.removeIngredientHandler}
-            disabledInfo = {disabledInfo}
-            price = {this.state.totalPrice}
+            disabledInfo={disabledInfo}
+            price={this.state.totalPrice}
+            purchasable={this.state.purchasable}
           />
         </div>
       </Aux>
