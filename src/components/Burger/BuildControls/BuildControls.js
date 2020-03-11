@@ -21,13 +21,17 @@ const buildControls = (props) => {
             key={item.label}
             label={item.label}
             added={() => props.ingredientAdded(item.type)} // passed in prop comes from BurgerBuilder.js
-            remove= {()=> props.removeIngredient(item.type)}
-            disabledInfo = {props.disabledInfo[item.type]} // have access to each type and need to identify each on specifically
-                                                            // so it the right one gets disabled. 
+            remove={() => props.removeIngredient(item.type)}
+            disabledInfo={props.disabledInfo[item.type]} // have access to each type and need to identify each on specifically
+          // so it the right one gets disabled. 
+
 
           />
         )
       })}
+      <button className={classes.OrderButton} disabled={!props.purchasable}>ORDER NOW</button>
+
+
     </div>
   )
 }
