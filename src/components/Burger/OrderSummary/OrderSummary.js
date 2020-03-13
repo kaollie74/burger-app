@@ -4,7 +4,8 @@ import Aux from '../../../hoc/Aux';
 
 const OrderSummary = (props) => {
   
-  // convert object into array of keys
+  // convert object into array of keys 
+      // Ex. {salad: 'value', bacon: 'value', cheese: 'value'} => [salad, bacon, cheese]
   // then map() through them to get the values. 
   const ingredientSummary = Object.keys(props.ingredients)
     .map((item) => {
